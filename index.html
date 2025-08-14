@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CosmoWeather</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Floating Planet Background Elements -->
+        <div class="planet planet-1"></div>
+        <div class="planet planet-2"></div>
+        <div class="planet planet-3"></div>
+        
+        <!-- Main App Content -->
+        <div class="weather-app glass">
+            <!-- App Header -->
+            <header class="app-header">
+                <div class="logo">
+                    <i class="fas fa-meteor"></i>
+                    <h1>CosmoWeather</h1>
+                </div>
+                <div class="theme-toggle">
+                    <i class="fas fa-sun"></i>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="theme-toggle">
+                        <span class="slider"></span>
+                    </div>
+                    <i class="fas fa-moon"></i>
+                </div>
+            </header>
+
+            <!-- Search Section -->
+            <div class="search-section holographic">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="location-input" placeholder="Search for a city..." class="search-input">
+                    <button id="search-btn" class="search-btn glow">
+                        <i class="fas fa-rocket"></i>
+                    </button>
+                </div>
+                <p id="error-message" class="error-message"></p>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div id="loading" class="loading-container hidden">
+                <div class="spinner">
+                    <div class="spinner-core"></div>
+                    <div class="spinner-orbits">
+                        <div class="orbit orbit-1"></div>
+                        <div class="orbit orbit-2"></div>
+                        <div class="orbit orbit-3"></div>
+                    </div>
+                </div>
+                <p>Scanning the cosmos...</p>
+            </div>
+
+            <!-- Weather Display -->
+            <div id="weather-display" class="weather-display hidden">
+                <!-- Location Info -->
+                <div class="location-info morph">
+                    <h2 id="city-name" class="city-name">City Name</h2>
+                    <div class="location-details">
+                        <span id="region" class="region">Region, Country</span>
+                        <span class="divider">•</span>
+                        <span id="local-time" class="local-time">Local Time</span>
+                        <span class="divider">•</span>
+                        <span id="coordinates" class="coordinates">Lat, Lon</span>
+                    </div>
+                </div>
+
+                <!-- Current Weather -->
+                <div class="current-weather holographic">
+                    <div class="weather-icon-container">
+                        <img id="weather-icon" src="" alt="Weather icon" class="weather-icon">
+                        <p id="weather-condition" class="weather-condition">Condition</p>
+                    </div>
+                    <div class="temperature-container">
+                        <div class="main-temp" id="temperature">--°C</div>
+                        <div class="feels-like" id="feels-like">Feels like --°C</div>
+                    </div>
+                    <div class="weather-details">
+                        <div class="detail-item">
+                            <i class="fas fa-wind"></i>
+                            <span id="wind-speed">-- km/h</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-tint"></i>
+                            <span id="humidity">--%</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-cloud-rain"></i>
+                            <span id="precipitation">-- mm</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weather Stats -->
+                <div class="weather-stats">
+                    <!-- Wind Card -->
+                    <div class="stat-card morph glow">
+                        <div class="card-header">
+                            <i class="fas fa-wind"></i>
+                            <h3>Wind</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="wind-direction">
+                                <div class="compass">
+                                    <div class="compass-arrow" id="wind-direction-arrow"></div>
+                                </div>
+                                <span id="wind-direction">--</span>
+                            </div>
+                            <div class="wind-details">
+                                <p>Speed: <span id="wind-speed-detail">-- km/h</span></p>
+                                <p>Gusts: <span id="wind-gust">-- km/h</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Humidity Card -->
+                    <div class="stat-card morph glow">
+                        <div class="card-header">
+                            <i class="fas fa-tint"></i>
+                            <h3>Humidity</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="humidity-meter">
+                                <div class="meter-bar">
+                                    <div class="meter-fill" id="humidity-level"></div>
+                                </div>
+                                <span id="humidity-percent">--%</span>
+                            </div>
+                            <p class="humidity-status" id="humidity-status">--</p>
+                        </div>
+                    </div>
+
+                    <!-- UV Index Card -->
+                    <div class="stat-card morph glow">
+                        <div class="card-header">
+                            <i class="fas fa-sun"></i>
+                            <h3>UV Index</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="uv-meter">
+                                <div class="uv-level" id="uv-level">
+                                    <span id="uv-index">--</span>
+                                </div>
+                                <div class="uv-scale">
+                                    <span>Low</span>
+                                    <span>Mod</span>
+                                    <span>High</span>
+                                    <span>V.High</span>
+                                    <span>Extreme</span>
+                                </div>
+                            </div>
+                            <p class="uv-status" id="uv-status">--</p>
+                        </div>
+                    </div>
+
+                    <!-- Visibility Card -->
+                    <div class="stat-card morph glow">
+                        <div class="card-header">
+                            <i class="fas fa-eye"></i>
+                            <h3>Visibility</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="visibility-value" id="visibility">-- km</div>
+                            <div class="visibility-meter">
+                                <div class="visibility-fill" id="visibility-level"></div>
+                            </div>
+                            <p class="visibility-status" id="visibility-status">--</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Info -->
+                <div class="additional-info">
+                    <div class="info-card morph">
+                        <h3><i class="fas fa-cloud"></i> Cloud Cover</h3>
+                        <div class="cloud-cover" id="cloud-cover">--%</div>
+                    </div>
+                    <div class="info-card morph">
+                        <h3><i class="fas fa-temperature-low"></i> Pressure</h3>
+                        <div class="pressure" id="pressure">-- mb</div>
+                    </div>
+                    <div class="info-card morph">
+                        <h3><i class="fas fa-clock"></i> Last Updated</h3>
+                        <div class="last-updated" id="last-updated">--</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="app-footer">
+                <p>Powered by WeatherAPI.com</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
